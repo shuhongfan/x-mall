@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.GoodsMapper">
+
+    <select id="findPage" resultType="com.example.entity.Goods">
+        select g.*,c.name as categoryName from goods g left join category c
+        on g.category_id = c.id
+        <where>
+            <if test="name != null and name != ''">
+                and g.name like concat('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+    <select id="getRecommend" resultType="com.example.entity.Goods">
+        select * from goods where recommend = 1 limit 8
+    </select>
+
+    <select id="findAll" resultType="com.example.entity.Goods">
+        select goods.*,category.name as categoryName  from goods left join category on goods.category_id = category.id
+    </select>
+
+</mapper>
